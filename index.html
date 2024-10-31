@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Kitty Amor</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #fff0f5;
+      overflow: hidden;
+      font-family: 'Comic Sans MS', cursive;
+    }
+
+    #counter {
+      font-size: 1.5em;
+      color: #ff69b4;
+      margin-bottom: 10px;
+    }
+
+    #arrow {
+      font-size: 1.2em;
+      color: #ff69b4;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+    }
+
+    #hello-kitty {
+      width: 200px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    #hello-kitty:active {
+      transform: scale(0.9);
+    }
+
+    #message {
+      display: none;
+      font-size: 1.5em;
+      color: #ff69b4;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    #message.large {
+      font-size: 2em;
+    }
+
+    #message.te-amo {
+      font-size: 3em;
+      margin-top: 10px;
+      color: #ff1493;
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: #ff69b4;
+      transform: rotate(45deg);
+      animation: floatUp 2s ease-in-out infinite;
+    }
+
+    .heart:before, .heart:after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: #ff69b4;
+      border-radius: 50%;
+    }
+
+    .heart:before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart:after {
+      top: 0;
+      left: -10px;
+    }
+
+    @keyframes floatUp {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-150px) scale(0.5);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="counter">Clics: 0</div>
+  <div id="arrow">⬇️ Click me!</div>
+  <img id="hello-kitty" src="https://i.pinimg.com/736x/67/bd/11/67bd118af2595b0ab9559f6a31d91058.jpg" alt="Hello Kitty">
+  <div id="message"></div>
+
+  <script>
+    let clickCount = 0;
+    const kitty = document.getElementById("hello-kitty");
+    const counter = document.getElementById("counter");
+    const message = document.getElementById("message");
+
+    const images = [
+      "https://i.pinimg.com/736x/67/bd/11/67bd118af2595b0ab9559f6a31d91058.jpg", // 0 - 10 clicks
+      "https://i.pinimg.com/564x/c1/03/e4/c103e4a664e9624f436aae43b09a1ddd.jpg", // 10 - 20 clicks
+      "https://i.pinimg.com/736x/81/4d/71/814d71c9bc167bf75f869d74a8d17d5a.jpg", // 20 - 30 clicks
+      "https://i.ytimg.com/vi/WQKL8TaXu3E/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDabm9RC3tGrUOzohOuaeSFECNUSw", // 30 - 40 clicks
+      "https://i.pinimg.com/736x/ed/70/d7/ed70d7e7ffea6a509fb2026d2c86d2c1.jpg"  // 40+ clicks (larger size)
+    ];
+
+    kitty.addEventListener("click", () => {
+      clickCount++;
+      counter.textContent = `Clics: ${clickCount}`;
+      
+      if (clickCount === 10) {
+        kitty.src = images[1];
+        message.textContent = "Te amo mucho Mili, sos el amor de mi vida ❤️";
+        message.style.display = "block";
+        createHearts();
+      } else if (clickCount === 20) {
+        kitty.src = images[2];
+        message.textContent = "Sos el amor de mi vida, sos lo mejor que me pasó 💖";
+      } else if (clickCount === 30) {
+        kitty.src = images[3];
+        message.textContent = "Quiero pasar el resto de mi vida a tu lado, todo a tu lado es más lindo desde que llegaste, sos perfecta";
+      } else if (clickCount === 40) {
+        kitty.src = images[4];
+        kitty.style.width = "250px"; // make last image larger
+        message.innerHTML = "<div>Estos cuatro meses fueron los mejores de mi vida</div><div class='te-amo'>TE AMO</div>";
+      }
+    });
+
+    function createHearts() {
+      setInterval(() => {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        heart.style.top = Math.random() * window.innerHeight + "px";
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 2000);
+      }, 200);
+    }
+  </script>
+</body>
+</html>
